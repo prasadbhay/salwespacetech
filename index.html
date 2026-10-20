@@ -1,0 +1,2934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SalweTech Orbit | Satellite Intelligence Platform</title>
+
+    <meta
+        name="description"
+        content="SalweTech Orbit — Satellite Intelligence, Ground Station Planning and Mission Analysis Platform."
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #02070d;
+            color: #eaf4fb;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(2, 7, 13, 0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(120, 180, 220, 0.12);
+        }
+
+        .nav-inner {
+            min-height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #58d5ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            font-size: 12px;
+            color: #9db0be;
+            align-items: center;
+        }
+
+        .nav-links a {
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .nav-status {
+            font-size: 10px;
+            color: #6fffc1;
+            border: 1px solid rgba(111, 255, 193, 0.25);
+            padding: 8px 12px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+            padding-top: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 70% 40%, rgba(0, 132, 255, 0.15), transparent 28%),
+                radial-gradient(circle at 20% 20%, rgba(75, 220, 255, 0.08), transparent 24%);
+            pointer-events: none;
+        }
+
+        .stars {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(#ffffff 1px, transparent 1px),
+                radial-gradient(#7fdfff 1px, transparent 1px);
+            background-size: 120px 120px, 210px 210px;
+            opacity: 0.16;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .eyebrow {
+            color: #5edbff;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 7vw, 86px);
+            line-height: 0.95;
+            letter-spacing: -4px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: #55d7ff;
+        }
+
+        .hero p {
+            max-width: 590px;
+            color: #93a8b7;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 21px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            transition: 0.25s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #58d5ff;
+            color: #001019;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(88, 213, 255, 0.22);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(150, 200, 225, 0.2);
+            background: rgba(255,255,255,0.03);
+            color: #dcebf3;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.07);
+        }
+
+        /* =========================
+           EARTH VISUAL
+        ========================== */
+
+        .earth-zone {
+            min-height: 530px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .earth {
+            width: 330px;
+            height: 330px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 30%, #4fd8ff 0%, #08638e 32%, #021d32 65%, #01070d 100%);
+            box-shadow:
+                0 0 50px rgba(42, 183, 255, 0.25),
+                inset -40px -30px 80px rgba(0,0,0,0.65);
+            position: relative;
+        }
+
+        .earth::before {
+            content: "";
+            position: absolute;
+            width: 130%;
+            height: 130%;
+            left: -15%;
+            top: -15%;
+            border: 1px solid rgba(83, 213, 255, 0.17);
+            border-radius: 50%;
+        }
+
+        .orbit {
+            position: absolute;
+            width: 480px;
+            height: 180px;
+            border: 1px solid rgba(83, 213, 255, 0.22);
+            border-radius: 50%;
+            transform: rotate(-18deg);
+        }
+
+        .orbit.two {
+            width: 530px;
+            height: 210px;
+            transform: rotate(34deg);
+            border-color: rgba(125, 176, 255, 0.16);
+        }
+
+        .satellite-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6fffc1;
+            box-shadow: 0 0 18px #6fffc1;
+            top: 18%;
+            right: 16%;
+        }
+
+        .data-card {
+            position: absolute;
+            background: rgba(5, 16, 27, 0.78);
+            border: 1px solid rgba(120, 200, 235, 0.18);
+            backdrop-filter: blur(14px);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 145px;
+        }
+
+        .data-card small {
+            color: #607989;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-card strong {
+            display: block;
+            margin-top: 6px;
+            font-size: 16px;
+        }
+
+        .data-one {
+            top: 12%;
+            left: 0;
+        }
+
+        .data-two {
+            bottom: 15%;
+            right: 0;
+        }
+
+        /* =========================
+           SECTION
+        ========================== */
+
+        section {
+            padding: 110px 0;
+            position: relative;
+        }
+
+        .section-label {
+            color: #5edbff;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            color: #8197a7;
+            max-width: 650px;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MISSION STRIP
+        ========================== */
+
+        .mission-strip {
+            border-top: 1px solid rgba(120,180,220,0.1);
+            border-bottom: 1px solid rgba(120,180,220,0.1);
+            background: rgba(255,255,255,0.018);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .mission-item {
+            padding: 24px;
+            border-right: 1px solid rgba(120,180,220,0.1);
+        }
+
+        .mission-item:last-child {
+            border-right: none;
+        }
+
+        .mission-item small {
+            display: block;
+            color: #637887;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .mission-item strong {
+            font-size: 15px;
+        }
+
+        /* =========================
+           COMMON PANEL
+        ========================== */
+
+        .glass-panel {
+            background: rgba(7, 17, 28, 0.78);
+            border: 1px solid rgba(130,190,220,0.14);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        /* =========================
+           SATELLITE EXPLORER
+        ========================== */
+
+        .explorer-box {
+            margin-top: 45px;
+        }
+
+        .explorer-top {
+            padding: 24px;
+            border-bottom: 1px solid rgba(130,190,220,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            width: min(500px, 100%);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 9px;
+            border: 1px solid rgba(120,190,220,0.18);
+            background: #020910;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: rgba(88,213,255,0.55);
+        }
+
+        .result-count {
+            color: #7f95a4;
+            font-size: 11px;
+        }
+
+        .explorer-content {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            min-height: 500px;
+        }
+
+        .satellite-list {
+            border-right: 1px solid rgba(120,180,220,0.1);
+            padding: 18px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .satellite-result-card {
+            width: 100%;
+            text-align: left;
+            color: inherit;
+            background: transparent;
+            padding: 16px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .satellite-result-card:hover,
+        .satellite-result-card.selected {
+            background: rgba(84,210,255,0.06);
+            border-color: rgba(84,210,255,0.18);
+        }
+
+        .satellite-result-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .satellite-result-top strong {
+            font-size: 13px;
+        }
+
+        .satellite-result-top span {
+            color: #607989;
+            font-size: 9px;
+        }
+
+        .satellite-result-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+            color: #718897;
+            font-size: 10px;
+        }
+
+        .satellite-result-empty {
+            color: #718897;
+            font-size: 12px;
+            padding: 25px;
+        }
+
+        .satellite-details {
+            padding: 30px;
+        }
+
+        .selected-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .selected-header h2 {
+            font-size: 26px;
+        }
+
+        .selected-header p {
+            color: #738b9a;
+            margin-top: 7px;
+            font-size: 12px;
+        }
+
+        .live-badge {
+            color: #6fffc1;
+            border: 1px solid rgba(111,255,193,0.25);
+            border-radius: 30px;
+            padding: 8px 12px;
+            height: fit-content;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .telemetry-item {
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            padding: 16px;
+            border-radius: 9px;
+        }
+
+        .telemetry-item span {
+            display: block;
+            color: #62798b;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .telemetry-item strong {
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        .source-note {
+            margin-top: 25px;
+            color: #607888;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           ORBIT VIEWER
+        ========================== */
+
+        .orbit-section {
+            background:
+                radial-gradient(circle at 70% 30%, rgba(0,132,255,0.07), transparent 35%);
+        }
+
+        .orbit-layout {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 18px;
+        }
+
+        .orbit-visual {
+            position: relative;
+            min-height: 540px;
+            background: #01060b;
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        #orbit-canvas {
+            width: 100%;
+            height: 540px;
+            display: block;
+        }
+
+        .orbit-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: rgba(2,9,16,0.72);
+            border: 1px solid rgba(120,180,220,0.14);
+            backdrop-filter: blur(10px);
+        }
+
+        .orbit-overlay small {
+            display: block;
+            color: #607989;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .orbit-overlay strong {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .orbit-info {
+            padding: 25px;
+            background: rgba(7,17,28,0.78);
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 18px;
+        }
+
+        .orbit-info h3 {
+            margin-bottom: 22px;
+            font-size: 18px;
+        }
+
+        .orbit-stat {
+            padding: 15px;
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            border-radius: 9px;
+            margin-bottom: 9px;
+        }
+
+        .orbit-stat span {
+            display: block;
+            color: #607989;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .orbit-stat strong {
+            font-size: 13px;
+        }
+
+        /* =========================
+           GROUND STATION
+        ========================== */
+
+        .planner-box {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 18px;
+        }
+
+        .planner-form,
+        .planner-results {
+            padding: 30px;
+            background: rgba(7,17,28,0.78);
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 18px;
+        }
+
+        .planner-form h3,
+        .planner-results h3 {
+            margin-bottom: 8px;
+        }
+
+        .planner-form > p,
+        .planner-results > p {
+            color: #718797;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #718897;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(120,180,220,0.14);
+            background: #020910;
+            color: #ffffff;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: rgba(88,213,255,0.5);
+        }
+
+        .planner-results-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+        }
+
+        .station-result {
+            padding: 22px 16px;
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            border-radius: 10px;
+        }
+
+        .station-result span {
+            display: block;
+            color: #607989;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 9px;
+        }
+
+        .station-result strong {
+            font-size: 19px;
+            color: #dcebf3;
+        }
+
+        .station-note {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 9px;
+            background: rgba(88,213,255,0.035);
+            border: 1px solid rgba(88,213,255,0.08);
+            color: #718797;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           PASS PREDICTOR
+        ========================== */
+
+        .pass-box {
+            margin-top: 45px;
+            padding: 30px;
+            background: rgba(7,17,28,0.78);
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 18px;
+        }
+
+        .pass-top {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pass-select {
+            width: min(480px,100%);
+        }
+
+        .pass-select label {
+            display: block;
+            color: #718897;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .pass-select select {
+            width: 100%;
+            padding: 13px;
+            background: #020910;
+            color: #ffffff;
+            border: 1px solid rgba(120,180,220,0.14);
+            border-radius: 8px;
+        }
+
+        .pass-status {
+            color: #6fffc1;
+            font-size: 10px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(111,255,193,0.2);
+            padding: 9px 13px;
+            border-radius: 30px;
+        }
+
+        .pass-grid {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(5,1fr);
+            gap: 10px;
+        }
+
+        .pass-card {
+            padding: 20px 15px;
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            border-radius: 10px;
+        }
+
+        .pass-card span {
+            display: block;
+            color: #607989;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .pass-card strong {
+            font-size: 13px;
+        }
+
+        /* =========================
+           PRODUCT CARDS
+        ========================== */
+
+        .product-grid {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .product-card {
+            padding: 28px;
+            background: rgba(8,18,29,0.75);
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 15px;
+            transition: 0.25s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(88,213,255,0.28);
+        }
+
+        .product-icon {
+            font-size: 25px;
+            margin-bottom: 22px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .product-card p {
+            color: #8195a4;
+            line-height: 1.7;
+            font-size: 13px;
+        }
+
+        /* =========================
+           INTELLIGENCE
+        ========================== */
+
+        .intel-grid {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .intel-panel {
+            min-height: 320px;
+            padding: 30px;
+            border: 1px solid rgba(120,180,220,0.12);
+            background: rgba(7,17,28,0.72);
+            border-radius: 16px;
+        }
+
+        .intel-panel h3 {
+            margin-bottom: 10px;
+        }
+
+        .intel-panel > p {
+            color: #718797;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .metrics {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 10px;
+        }
+
+        .metric {
+            padding: 14px;
+            background: #020910;
+            border-radius: 8px;
+        }
+
+        .metric span {
+            display: block;
+            color: #617887;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .metric strong {
+            font-size: 15px;
+        }
+
+        /* =========================
+           RADAR
+        ========================== */
+
+        .radar {
+            margin: 25px auto 0;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 1px solid rgba(88,213,255,0.28);
+            position: relative;
+            background:
+                radial-gradient(circle, transparent 19%, rgba(88,213,255,0.035) 20%, transparent 21%),
+                radial-gradient(circle, transparent 39%, rgba(88,213,255,0.035) 40%, transparent 41%),
+                radial-gradient(circle, transparent 59%, rgba(88,213,255,0.035) 60%, transparent 61%);
+        }
+
+        .radar::before {
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 1px;
+            background: rgba(88,213,255,0.28);
+            left: 25%;
+            top: 50%;
+        }
+
+        .radar::after {
+            content: "";
+            position: absolute;
+            height: 50%;
+            width: 1px;
+            background: rgba(88,213,255,0.28);
+            left: 50%;
+            top: 25%;
+        }
+
+        .radar-point {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #6fffc1;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #6fffc1;
+            top: 32%;
+            left: 65%;
+        }
+
+        /* =========================
+           MISSION CONTROL
+        ========================== */
+
+        .mission-control-box {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .control-panel {
+            padding: 28px;
+            background: rgba(7,17,28,0.78);
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 16px;
+        }
+
+        .control-panel h3 {
+            margin-bottom: 8px;
+        }
+
+        .control-panel > p {
+            color: #718797;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 10px;
+        }
+
+        .control-stat {
+            padding: 16px;
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            border-radius: 9px;
+        }
+
+        .control-stat span {
+            display: block;
+            color: #607989;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .control-stat strong {
+            font-size: 13px;
+        }
+
+        .mission-log {
+            max-height: 290px;
+            overflow-y: auto;
+        }
+
+        .mission-log-entry {
+            display: grid;
+            grid-template-columns: 70px 75px 1fr;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(120,180,220,0.07);
+            font-size: 10px;
+        }
+
+        .mission-log-time {
+            color: #607989;
+        }
+
+        .mission-log-type {
+            color: #58d5ff;
+        }
+
+        .mission-log-message {
+            color: #94a8b5;
+        }
+
+        /* =========================
+           API
+        ========================== */
+
+        .api-box {
+            margin-top: 45px;
+            padding: 32px;
+            background: #01060b;
+            border: 1px solid rgba(120,180,220,0.12);
+            border-radius: 16px;
+        }
+
+        .api-code {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #00040a;
+            color: #77ddff;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        /* =========================
+           ABOUT FOUNDER
+        ========================== */
+
+        .about-section {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(47,148,210,0.09), transparent 35%);
+        }
+
+        .founder-card {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 35px;
+            padding: 38px;
+            background: rgba(7,17,28,0.8);
+            border: 1px solid rgba(120,190,220,0.15);
+            border-radius: 20px;
+        }
+
+        .founder-left {
+            border-right: 1px solid rgba(120,180,220,0.1);
+            padding-right: 35px;
+        }
+
+        .founder-tag {
+            display: inline-block;
+            color: #6fffc1;
+            border: 1px solid rgba(111,255,193,0.25);
+            border-radius: 30px;
+            padding: 8px 13px;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .founder-left h2 {
+            font-size: 38px;
+            line-height: 1.05;
+            margin-bottom: 12px;
+        }
+
+        .founder-role {
+            color: #58d5ff;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .founder-contact {
+            margin-top: 30px;
+            padding: 18px;
+            background: #020910;
+            border-radius: 9px;
+            color: #8298a7;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .founder-contact a {
+            color: #58d5ff;
+        }
+
+        .founder-right h3 {
+            font-size: 21px;
+            margin-bottom: 14px;
+        }
+
+        .founder-right > p {
+            color: #879aa8;
+            line-height: 1.8;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .credentials {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .credential {
+            padding: 17px;
+            background: #020910;
+            border: 1px solid rgba(120,180,220,0.08);
+            border-radius: 9px;
+        }
+
+        .credential span {
+            display: block;
+            color: #5f7787;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .credential strong {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           CTA
+        ========================== */
+
+        .cta {
+            text-align: center;
+            padding: 120px 20px;
+            border-top: 1px solid rgba(120,180,220,0.08);
+        }
+
+        .cta h2 {
+            font-size: clamp(36px, 6vw, 64px);
+            margin-bottom: 18px;
+        }
+
+        .cta p {
+            color: #7e94a4;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.7;
+            font-size: 13px;
+        }
+
+        .cta .btn {
+            margin-top: 30px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            border-top: 1px solid rgba(120,180,220,0.1);
+            padding: 35px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: #647a89;
+            font-size: 10px;
+        }
+
+        .footer-brand {
+            color: #d9e9f2;
+            font-weight: 700;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 1050px) {
+
+            .nav-links {
+                gap: 12px;
+                font-size: 10px;
+            }
+
+            .nav-status {
+                display: none;
+            }
+
+            .orbit-layout,
+            .planner-box {
+                grid-template-columns: 1fr;
+            }
+
+            .pass-grid {
+                grid-template-columns: repeat(3,1fr);
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .earth-zone {
+                min-height: 420px;
+            }
+
+            .mission-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .mission-item:nth-child(2) {
+                border-right: none;
+            }
+
+            .mission-item {
+                border-bottom: 1px solid rgba(120,180,220,0.1);
+            }
+
+            .explorer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .satellite-list {
+                border-right: none;
+                border-bottom: 1px solid rgba(120,180,220,0.1);
+                max-height: 300px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intel-grid,
+            .mission-control-box {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-card {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-left {
+                border-right: none;
+                border-bottom: 1px solid rgba(120,180,220,0.1);
+                padding-right: 0;
+                padding-bottom: 30px;
+            }
+
+            .planner-results-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            section {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .earth {
+                width: 260px;
+                height: 260px;
+            }
+
+            .orbit {
+                width: 360px;
+            }
+
+            .orbit.two {
+                width: 390px;
+            }
+
+            .data-card {
+                transform: scale(0.8);
+            }
+
+            .telemetry-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .credentials {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-card {
+                padding: 25px;
+            }
+
+            .planner-results-grid,
+            .pass-grid,
+            .control-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .pass-grid .pass-card:last-child {
+                grid-column: span 2;
+            }
+
+            .mission-log-entry {
+                grid-template-columns: 60px 65px 1fr;
+            }
+
+            #orbit-canvas {
+                height: 400px;
+            }
+
+            .orbit-visual {
+                min-height: 400px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav>
+
+    <div class="container nav-inner">
+
+        <div class="logo">
+            Salwe<span>Tech</span> Orbit
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="#explorer">
+                    Explorer
+                </a>
+            </li>
+
+            <li>
+                <a href="#orbit">
+                    Orbit Viewer
+                </a>
+            </li>
+
+            <li>
+                <a href="#ground-station">
+                    Ground Station
+                </a>
+            </li>
+
+            <li>
+                <a href="#passes">
+                    Pass Predictor
+                </a>
+            </li>
+
+            <li>
+                <a href="#intelligence">
+                    Intelligence
+                </a>
+            </li>
+
+            <li>
+                <a href="#products">
+                    Platform
+                </a>
+            </li>
+
+            <li>
+                <a href="#about">
+                    About
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="nav-status">
+            ● SYSTEM ONLINE
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+    <div class="stars"></div>
+
+    <div class="container hero-grid">
+
+        <div>
+
+            <div class="eyebrow">
+                SALWETECH SPACE SYSTEMS
+            </div>
+
+            <h1>
+                Intelligence<br>
+                Beyond <span>Earth.</span>
+            </h1>
+
+            <p>
+                SalweTech Orbit is a satellite intelligence and mission
+                planning platform designed to explore spacecraft,
+                understand orbital data and support future ground
+                station operations.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#explorer"
+                    class="btn btn-primary"
+                >
+                    EXPLORE SATELLITES
+                </a>
+
+                <a
+                    href="#about"
+                    class="btn btn-secondary"
+                >
+                    ABOUT SALWETECH
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="earth-zone">
+
+            <div class="earth"></div>
+
+            <div class="orbit"></div>
+            <div class="orbit two"></div>
+
+            <div class="satellite-dot"></div>
+
+            <div class="data-card data-one">
+
+                <small>
+                    Tracked Objects
+                </small>
+
+                <strong id="hero-object-count">
+                    Loading...
+                </strong>
+
+            </div>
+
+            <div class="data-card data-two">
+
+                <small>
+                    Data Source
+                </small>
+
+                <strong>
+                    CACHED GP
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     MISSION STRIP
+========================= -->
+
+<div class="mission-strip">
+
+    <div class="container mission-grid">
+
+        <div class="mission-item">
+
+            <small>
+                Platform
+            </small>
+
+            <strong>
+                Satellite Intelligence
+            </strong>
+
+        </div>
+
+
+        <div class="mission-item">
+
+            <small>
+                Orbit Engine
+            </small>
+
+            <strong>
+                SGP4 Propagation
+            </strong>
+
+        </div>
+
+
+        <div class="mission-item">
+
+            <small>
+                Architecture
+            </small>
+
+            <strong>
+                Cloud Ready
+            </strong>
+
+        </div>
+
+
+        <div class="mission-item">
+
+            <small>
+                System Status
+            </small>
+
+            <strong
+                style="color:#6fffc1;"
+            >
+                Operational
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SATELLITE EXPLORER
+========================= -->
+
+<section id="explorer">
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 01
+        </div>
+
+        <h2 class="section-title">
+            Satellite Explorer
+        </h2>
+
+        <p class="section-subtitle">
+            Search and inspect spacecraft using cached general
+            perturbed orbital element data and orbital calculations.
+        </p>
+
+
+        <div class="explorer-box glass-panel">
+
+            <div class="explorer-top">
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="satellite-search"
+                        placeholder="Search satellite name, NORAD ID, orbit or category..."
+                    >
+
+                </div>
+
+                <div
+                    class="result-count"
+                    id="satellite-count"
+                >
+                    Loading satellite database...
+                </div>
+
+            </div>
+
+
+            <div class="explorer-content">
+
+                <div
+                    class="satellite-list"
+                    id="satellite-results"
+                >
+                    Loading satellites...
+                </div>
+
+
+                <div class="satellite-details">
+
+                    <div class="selected-header">
+
+                        <div>
+
+                            <h2 id="selected-name">
+                                Loading satellite...
+                            </h2>
+
+                            <p id="selected-subtitle">
+                                Satellite intelligence
+                            </p>
+
+                        </div>
+
+                        <div
+                            class="live-badge"
+                            id="selected-status"
+                        >
+                            DATA CONNECTING
+                        </div>
+
+                    </div>
+
+
+                    <div class="telemetry-grid">
+
+                        <div class="telemetry-item">
+                            <span>NORAD ID</span>
+                            <strong id="norad">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Orbit</span>
+                            <strong id="orbit-type">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Approx. Mean Altitude</span>
+                            <strong id="altitude">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Mean Motion</span>
+                            <strong id="mean-motion">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Eccentricity</span>
+                            <strong id="eccentricity">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Inclination</span>
+                            <strong id="inclination">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>RAAN</span>
+                            <strong id="raan">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Arg. Perigee</span>
+                            <strong id="arg-perigee">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Mean Anomaly</span>
+                            <strong id="mean-anomaly">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Revolution</span>
+                            <strong id="revolution">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>BSTAR</span>
+                            <strong id="bstar">—</strong>
+                        </div>
+
+                        <div class="telemetry-item">
+                            <span>Epoch</span>
+                            <strong id="epoch">—</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="source-note">
+                        DATA ENGINE: SALWETECH ORBITAL ANALYSIS.
+                        Cached orbital element data is used in the current
+                        prototype. Approximate mean altitude is calculated
+                        from mean motion and should not be interpreted as
+                        instantaneous spacecraft altitude.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     3D ORBIT VIEWER
+========================= -->
+
+<section
+    id="orbit"
+    class="orbit-section"
+>
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 02
+        </div>
+
+        <h2 class="section-title">
+            3D Orbit Viewer
+        </h2>
+
+        <p class="section-subtitle">
+            Visualize the selected spacecraft orbit around Earth using
+            orbital parameters and SGP4-based propagation.
+        </p>
+
+
+        <div class="orbit-layout">
+
+            <div class="orbit-visual">
+
+                <canvas id="orbit-canvas"></canvas>
+
+                <div class="orbit-overlay">
+
+                    <small>
+                        Tracking Object
+                    </small>
+
+                    <strong id="orbit-satellite-name">
+                        ISS (ZARYA)
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="orbit-info">
+
+                <h3>
+                    Orbital Parameters
+                </h3>
+
+
+                <div class="orbit-stat">
+
+                    <span>
+                        NORAD
+                    </span>
+
+                    <strong id="orbit-norad">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="orbit-stat">
+
+                    <span>
+                        Orbit Class
+                    </span>
+
+                    <strong id="orbit-class">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="orbit-stat">
+
+                    <span>
+                        Approx. Altitude
+                    </span>
+
+                    <strong id="orbit-altitude">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="orbit-stat">
+
+                    <span>
+                        Inclination
+                    </span>
+
+                    <strong id="orbit-inclination">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="orbit-stat">
+
+                    <span>
+                        Mean Motion
+                    </span>
+
+                    <strong id="orbit-motion">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     GROUND STATION PLANNER
+========================= -->
+
+<section id="ground-station">
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 03
+        </div>
+
+        <h2 class="section-title">
+            Ground Station Planner
+        </h2>
+
+        <p class="section-subtitle">
+            Calculate current satellite pointing geometry from a
+            selected ground station location.
+        </p>
+
+
+        <div class="planner-box">
+
+            <div class="planner-form">
+
+                <h3>
+                    Station Configuration
+                </h3>
+
+                <p>
+                    Enter the ground station coordinates and calculate
+                    the satellite's current observation geometry.
+                </p>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Station Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="station-name"
+                        value="SalweTech Ground Station"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Latitude
+                    </label>
+
+                    <input
+                        type="number"
+                        id="station-latitude"
+                        step="0.001"
+                        value="20.906"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Longitude
+                    </label>
+
+                    <input
+                        type="number"
+                        id="station-longitude"
+                        step="0.001"
+                        value="77.755"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="calculate-station"
+                    class="btn btn-primary"
+                >
+                    CALCULATE POINTING
+                </button>
+
+            </div>
+
+
+            <div class="planner-results">
+
+                <h3>
+                    Antenna Pointing
+                </h3>
+
+                <p>
+                    Current calculated look-angle information for the
+                    selected spacecraft.
+                </p>
+
+
+                <div class="planner-results-grid">
+
+                    <div class="station-result">
+
+                        <span>
+                            Azimuth
+                        </span>
+
+                        <strong id="station-azimuth">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="station-result">
+
+                        <span>
+                            Elevation
+                        </span>
+
+                        <strong id="station-elevation">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="station-result">
+
+                        <span>
+                            Range
+                        </span>
+
+                        <strong id="station-range">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="station-note">
+
+                    Ground station:
+                    <strong id="dashboard-station">
+                        SalweTech Ground Station
+                    </strong>
+
+                    <br><br>
+
+                    Azimuth is measured clockwise from north.
+                    Elevation represents the spacecraft angle above
+                    the local horizon.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PASS PREDICTOR
+========================= -->
+
+<section id="passes">
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 04
+        </div>
+
+        <h2 class="section-title">
+            Pass Predictor
+        </h2>
+
+        <p class="section-subtitle">
+            Estimate upcoming visibility windows for the selected
+            spacecraft and configured ground station.
+        </p>
+
+
+        <div class="pass-box">
+
+            <div class="pass-top">
+
+                <div class="pass-select">
+
+                    <label>
+                        Satellite
+                    </label>
+
+                    <select id="pass-satellite">
+                        <option>
+                            Loading satellites...
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <div
+                    class="pass-status"
+                    id="visibility-status"
+                >
+                    CALCULATING
+                </div>
+
+            </div>
+
+
+            <div class="pass-grid">
+
+                <div class="pass-card">
+
+                    <span>
+                        AOS
+                    </span>
+
+                    <strong id="pass-aos">
+                        --:-- UTC
+                    </strong>
+
+                </div>
+
+
+                <div class="pass-card">
+
+                    <span>
+                        LOS
+                    </span>
+
+                    <strong id="pass-los">
+                        --:-- UTC
+                    </strong>
+
+                </div>
+
+
+                <div class="pass-card">
+
+                    <span>
+                        Max Elevation
+                    </span>
+
+                    <strong id="pass-max-elevation">
+                        --°
+                    </strong>
+
+                </div>
+
+
+                <div class="pass-card">
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <strong id="pass-duration">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="pass-card">
+
+                    <span>
+                        Next Pass
+                    </span>
+
+                    <strong id="dashboard-pass">
+                        Calculating...
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section id="products">
+
+    <div class="container">
+
+        <div class="section-label">
+            SALWETECH PLATFORM
+        </div>
+
+        <h2 class="section-title">
+            Mission Operations Layer
+        </h2>
+
+        <p class="section-subtitle">
+            A software architecture designed to evolve from satellite
+            exploration into mission planning and ground station operations.
+        </p>
+
+
+        <div class="product-grid">
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Satellite Intelligence
+                </h3>
+
+                <p>
+                    Search spacecraft, inspect orbital parameters,
+                    identify satellite categories and analyse
+                    orbital characteristics.
+                </p>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    ⌁
+                </div>
+
+                <h3>
+                    Pass Prediction
+                </h3>
+
+                <p>
+                    Calculate AOS, LOS, maximum elevation,
+                    visibility windows and satellite passes
+                    for a configured ground station.
+                </p>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    △
+                </div>
+
+                <h3>
+                    Ground Station Planner
+                </h3>
+
+                <p>
+                    Plan antenna pointing, communication windows,
+                    azimuth/elevation tracking and mission schedules.
+                </p>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    ▣
+                </div>
+
+                <h3>
+                    Mission Dashboard
+                </h3>
+
+                <p>
+                    Bring spacecraft information, telemetry,
+                    communication schedules and alerts into one
+                    operational interface.
+                </p>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    ◌
+                </div>
+
+                <h3>
+                    Orbit Visualization
+                </h3>
+
+                <p>
+                    Visualize spacecraft trajectories around Earth
+                    using modern 3D visualization technologies.
+                </p>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-icon">
+                    ⌘
+                </div>
+
+                <h3>
+                    SalweTech Space API
+                </h3>
+
+                <p>
+                    A future developer API for satellite metadata,
+                    orbital calculations, pass predictions and
+                    mission intelligence.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MISSION INTELLIGENCE
+========================= -->
+
+<section id="intelligence">
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 05
+        </div>
+
+        <h2 class="section-title">
+            Mission Intelligence
+        </h2>
+
+        <p class="section-subtitle">
+            Convert orbital information into operational information
+            for mission planning workflows.
+        </p>
+
+
+        <div class="intel-grid">
+
+            <div class="intel-panel">
+
+                <h3>
+                    Pass Prediction Engine
+                </h3>
+
+                <p>
+                    SGP4-based calculations determine when a selected
+                    spacecraft becomes visible from the configured
+                    ground station.
+                </p>
+
+                <div class="metrics">
+
+                    <div class="metric">
+
+                        <span>
+                            AOS
+                        </span>
+
+                        <strong id="intel-aos">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            LOS
+                        </span>
+
+                        <strong id="intel-los">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            Max Elevation
+                        </span>
+
+                        <strong id="intel-max">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            Visibility
+                        </span>
+
+                        <strong id="intel-visibility">
+                            Pending
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="intel-panel">
+
+                <h3>
+                    Ground Station View
+                </h3>
+
+                <p>
+                    Monitor the current pointing geometry of the
+                    selected spacecraft from the configured station.
+                </p>
+
+                <div class="radar">
+
+                    <div class="radar-point"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MISSION CONTROL
+========================= -->
+
+<section id="mission-control">
+
+    <div class="container">
+
+        <div class="section-label">
+            MODULE 06
+        </div>
+
+        <h2 class="section-title">
+            Mission Control
+        </h2>
+
+        <p class="section-subtitle">
+            A centralized operational view combining satellite
+            tracking, station information, pass schedules and
+            system events.
+        </p>
+
+
+        <div class="mission-control-box">
+
+            <div class="control-panel">
+
+                <h3>
+                    Live Mission Status
+                </h3>
+
+                <p>
+                    Current platform state and selected spacecraft
+                    operational information.
+                </p>
+
+
+                <div class="control-grid">
+
+                    <div class="control-stat">
+
+                        <span>
+                            Selected Satellite
+                        </span>
+
+                        <strong id="control-satellite">
+                            ISS (ZARYA)
+                        </strong>
+
+                    </div>
+
+
+                    <div class="control-stat">
+
+                        <span>
+                            Ground Station
+                        </span>
+
+                        <strong id="control-station">
+                            SalweTech Ground Station
+                        </strong>
+
+                    </div>
+
+
+                    <div class="control-stat">
+
+                        <span>
+                            Latitude
+                        </span>
+
+                        <strong id="telemetry-latitude">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="control-stat">
+
+                        <span>
+                            Longitude
+                        </span>
+
+                        <strong id="telemetry-longitude">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="control-stat">
+
+                        <span>
+                            Altitude
+                        </span>
+
+                        <strong id="telemetry-altitude">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="control-stat">
+
+                        <span>
+                            Next Pass
+                        </span>
+
+                        <strong id="control-pass">
+                            Calculating...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="control-panel">
+
+                <h3>
+                    Mission Event Log
+                </h3>
+
+                <p>
+                    System events, satellite tracking actions and
+                    operational calculations.
+                </p>
+
+
+                <div
+                    class="mission-log"
+                    id="mission-log"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     API
+========================= -->
+
+<section id="api">
+
+    <div class="container">
+
+        <div class="section-label">
+            DEVELOPER LAYER
+        </div>
+
+        <h2 class="section-title">
+            SalweTech Space API
+        </h2>
+
+        <p class="section-subtitle">
+            Designed as the software interface for satellite
+            intelligence, orbital analysis and mission applications.
+        </p>
+
+
+        <div class="api-box">
+
+            <div class="api-code">
+                GET /api/v1/satellites<br>
+                GET /api/v1/satellites/{norad_id}<br>
+                GET /api/v1/orbits/{norad_id}<br>
+                GET /api/v1/passes/{norad_id}<br>
+                GET /api/v1/ground-stations/{station_id}<br>
+                GET /api/v1/missions/{mission_id}
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT FOUNDER
+========================= -->
+
+<section
+    id="about"
+    class="about-section"
+>
+
+    <div class="container">
+
+        <div class="section-label">
+            ABOUT SALWETECH
+        </div>
+
+        <h2 class="section-title">
+            Founder & Vision
+        </h2>
+
+        <p class="section-subtitle">
+            SalweTech is being developed with a focus on engineering,
+            intelligent software systems, robotics and future
+            aerospace technologies.
+        </p>
+
+
+        <div class="founder-card">
+
+            <div class="founder-left">
+
+                <div class="founder-tag">
+                    Founder Profile
+                </div>
+
+                <h2>
+                    Prasad<br>
+                    Salwe
+                </h2>
+
+                <div class="founder-role">
+                    FOUNDER & CEO — SALWETECH
+                </div>
+
+                <div class="founder-contact">
+
+                    <strong>
+                        Contact
+                    </strong>
+
+                    <br><br>
+
+                    📞
+
+                    <a href="tel:+917558560601">
+                        +91 75585 60601
+                    </a>
+
+                    <br>
+
+                    ✉
+
+                    <a href="mailto:prasadsalwe05@gmail.com">
+                        prasadsalwe05@gmail.com
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="founder-right">
+
+                <h3>
+                    About the Founder
+                </h3>
+
+                <p>
+                    Prasad Salwe is an Electronics and Telecommunication
+                    Engineering student and the founder of SalweTech.
+                    His technical interests include aerospace software,
+                    robotics, embedded systems, artificial intelligence,
+                    IoT and intelligent engineering applications.
+                </p>
+
+                <p>
+                    He is pursuing his engineering degree from
+                    <strong>
+                        Ajeenkya D Y Patil School of Engineering,
+                        Lohegaon
+                    </strong>,
+                    in
+                    <strong>
+                        Electronics & Telecommunication Engineering
+                        (E&TC)
+                    </strong>,
+                    along with an
+                    <strong>
+                        Honours in Robotics
+                    </strong>.
+                </p>
+
+                <p>
+                    He is also a member of
+                    <strong>
+                        IETE — The Institution of Electronics and
+                        Telecommunication Engineers
+                    </strong>,
+                    and has completed a
+                    <strong>
+                        Data Analyst course from Oracle University,
+                        Austin, Texas
+                    </strong>,
+                    with a specialization in
+                    <strong>
+                        Generative AI (Gen AI)
+                    </strong>.
+                </p>
+
+
+                <div class="credentials">
+
+                    <div class="credential">
+
+                        <span>
+                            Degree
+                        </span>
+
+                        <strong>
+                            B.E. Electronics & Telecommunication Engineering
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential">
+
+                        <span>
+                            Institute
+                        </span>
+
+                        <strong>
+                            Ajeenkya D Y Patil School of Engineering,
+                            Lohegaon
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential">
+
+                        <span>
+                            Honours
+                        </span>
+
+                        <strong>
+                            Honours in Robotics
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential">
+
+                        <span>
+                            Professional Membership
+                        </span>
+
+                        <strong>
+                            IETE — The Institution of Electronics and
+                            Telecommunication Engineers
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential">
+
+                        <span>
+                            Course
+                        </span>
+
+                        <strong>
+                            Data Analyst Course — Oracle University,
+                            Austin, Texas
+                        </strong>
+
+                    </div>
+
+
+                    <div class="credential">
+
+                        <span>
+                            Specialization
+                        </span>
+
+                        <strong>
+                            Generative Artificial Intelligence (Gen AI)
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="section-label">
+            NEXT GENERATION SPACE SOFTWARE
+        </div>
+
+        <h2>
+            Enter Mission Control.
+        </h2>
+
+        <p>
+            SalweTech Orbit is being built as a foundation for
+            satellite intelligence, orbital analysis, ground station
+            planning and future mission operations.
+        </p>
+
+        <a
+            href="#mission-control"
+            class="btn btn-primary"
+        >
+            ENTER MISSION CONTROL
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <div>
+
+            <span class="footer-brand">
+                SalweTech Orbit
+            </span>
+
+            <br><br>
+
+            Satellite Intelligence & Mission Software
+
+        </div>
+
+
+        <div>
+
+            Founder & CEO:
+            <strong>
+                Prasad Salwe
+            </strong>
+
+            <br><br>
+
+            📞 +91 75585 60601
+
+            <br>
+
+            ✉ prasadsalwe05@gmail.com
+
+            <br><br>
+
+            © 2026 SalweTech. All rights reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
